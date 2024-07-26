@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
+import SearchBar from "./Serachbar";
 import EventList from "./EventList";
 import Pagination from "./Pagination";
 import { Event } from "@/lib/EventType";
-import SearchBar from "./Serachbar";
 
 const FetchedData = () => {
-  const dataURL = "https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats";
   const [data, setData] = useState<Event[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [dateFilter, setDateFilter] = useState("");
+  const [tagFilter, setTagFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // Number of items per page
+  const itemsPerPage = 3;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(dataURL);
+      const response = await fetch(
+        "https://669f704cb132e2c136fdd9a0.mockapi.io/api/v1/retreats"
+      );
       const data = await response.json();
       setData(data);
     };
@@ -35,12 +37,17 @@ const FetchedData = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1);
   };
 
   const handleDateFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateFilter(e.target.value);
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
+  };
+
+  const handleTagFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTagFilter(e.target.value);
+    setCurrentPage(1);
   };
 
   const filteredData = data.filter((event) => {
@@ -57,7 +64,9 @@ const FetchedData = () => {
           return eventYear === 2024 || eventYear === 2025;
         return true;
       })();
-    return matchesSearch && matchesDate;
+    const matchesTag =
+      tagFilter === "" || event.tag.includes(tagFilter.toLowerCase());
+    return matchesSearch && matchesDate && matchesTag;
   });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -77,8 +86,10 @@ const FetchedData = () => {
         <SearchBar
           searchQuery={searchQuery}
           dateFilter={dateFilter}
+          tagFilter={tagFilter}
           handleSearch={handleSearch}
           handleDateFilter={handleDateFilter}
+          handleTagFilter={handleTagFilter}
         />
         <EventList events={paginatedData} formatEventDate={formatEventDate} />
         <Pagination

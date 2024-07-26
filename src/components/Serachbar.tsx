@@ -4,11 +4,13 @@ import { Input } from './ui/input';
 interface SearchBarProps {
   searchQuery: string;
   dateFilter: string;
+  tagFilter: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDateFilter: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleTagFilter: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, dateFilter, handleSearch, handleDateFilter }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, dateFilter, tagFilter, handleSearch, handleDateFilter, handleTagFilter }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
       <select
@@ -28,13 +30,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, dateFilter, handleSe
         name="type"
         aria-label="Filter by Type"
         id="filter-type"
-        onChange={handleDateFilter}
-        value={dateFilter}
+        onChange={handleTagFilter}
+        value={tagFilter}
       >
         <option value="">Filter By Type</option>
-        <option value="Yoga">Yoga</option>
-        <option value="Meditation">Meditation</option>
-        <option value="Detox">Detox</option>
+        <option value="yoga">Yoga</option>
+        <option value="meditation">Meditation</option>
+        <option value="detox">Detox</option>
       </select>
       <div className="flex w-full">
         <Input
