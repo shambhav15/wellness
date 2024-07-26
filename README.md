@@ -1,26 +1,5 @@
 # React + TypeScript + Vite
 
-## Getting Started
-
-First clone the repo by git clone https://github.com/shambhav15/wellness.git
-
-Then if you have no pacakge installed then atleast install node and follow the following steps:
-
-1. Run "npm install" or "npm i" in the project path
-2. Run the development server by one the below commands:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open (http://localhost:5173) with your browser to see the result.
-
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
